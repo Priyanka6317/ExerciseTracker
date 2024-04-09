@@ -20,7 +20,7 @@ const addExercise = asyncHandler(async (req, res) => {
 const getExercises = asyncHandler(async (req, res) => {
   const { _id, username } = await user.findById(req.params._id);
   const exercises = await exercise.find({});
-  const filteredExercise = req.query.from
+  const filteredExercise = req?.query?.from
     ? await getLimitedExercises(req, exercises)
     : await getAllExercises(_id, exercises);
   const result = {
