@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const { validateDate } = require("../middleware/validateDate");
+const moment = require("moment");
 
 const exerciseSchema = mongoose.Schema(
   {
@@ -11,11 +13,23 @@ const exerciseSchema = mongoose.Schema(
       required: [true, "Description is required"],
     },
     duration: {
-      type: String,
+      type: Number,
       required: [true, "Duration is required"],
+      validate: {
+        validator: function (value) {
+          return value > 0;
+        },
+        message: "Duration must be a positive number",
+      },
     },
     date: {
-      type: String,
+      type: Date,
+      validate: {
+        validator: function (value) {
+          !moment(value, "YYYY-MM-DD", true).isValid();
+        },
+        message: "Please Enter a Valid date",
+      },
     },
   },
   {
