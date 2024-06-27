@@ -44,16 +44,71 @@ const getExercises = asyncHandler(async (req, res) => {
   res.json(result);
 });
 
-//Getting Exercises of the Respective user
-const getUserExercises = asyncHandler(async (id) => {
-  const result = await exercise.find({ userId: id }).sort({ date: 1 });
-  const filteredExercise = result.map((obj) => {
-    const { _id, description, duration, date } = obj;
-    return { _id, description, duration, date };
-  });
-  const count = filteredExercise.length;
-  return { exercises: filteredExercise, count };
-});
+
+
+
+// const getExercises = asyncHandler(async (req, res) => {
+//   const { _id, username } = await getUserDetail(req.params._id);
+
+//   const { from = "", to = "", limit = "", page = "" } = req?.query;
+
+//   console.log(isValidDate);
+
+//   const { exercises, totalCount } = await getUserExercises(
+//     _id,
+//     from,
+//     to,
+//     limit,
+//     page
+//   );
+
+//   const result = {
+//     _id,
+//     username,
+//     count: totalCount,
+//     logs: exercises,
+//   };
+
+//   res.json(result);
+// });
+
+// const getUserExercises = async (userId, from, to, limit, page) => {
+//   const query = { userId };
+
+//   if (from) {
+//     query.date = { $gte: new Date(from) };
+//   }
+
+//   if (to) {
+//     query.date = query.date || {};
+//     query.date.$lte = new Date(new Date(to).setHours(23, 59, 59, 999));
+//   }
+
+//   let exerciseQuery = exercise.find(query);
+
+//   const limitValue = limit ? parseInt(limit) : 10;
+//   const pageValue = page ? parseInt(page) : 1;
+
+//   const skipValue = (pageValue - 1) * limitValue;
+
+//   exerciseQuery = exerciseQuery.skip(skipValue).limit(limitValue);
+
+//   const exercises = await exerciseQuery.exec();
+//   const totalCount = await exercise.countDocuments(query);
+
+//   return { exercises, totalCount };
+// };
+
+// //Getting Exercises of the Respective user
+// const getUserExercises = asyncHandler(async (id) => {
+//   const result = await exercise.find({ userId: id }).sort({ date: 1 });
+//   const filteredExercise = result.map((obj) => {
+//     const { _id, description, duration, date } = obj;
+//     return { _id, description, duration, date };
+//   });
+//   const count = filteredExercise.length;
+//   return { exercises: filteredExercise, count };
+// });
 
 //Getting Exercises of The Respective user with some limited exercises
 const getLimitedExercises = (inputExercise, query) => {
@@ -74,6 +129,10 @@ const getLimitedExercises = (inputExercise, query) => {
     const count = results.length;
     return { exercises: limitedExercise, count };
   }
+
+
+
+
 };
 
 module.exports = {
